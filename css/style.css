@@ -1,0 +1,92 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wrapper{
+  background-color: #D1E8E2;
+  text-align: center;
+  width: 50%;
+  margin-top: 10%;
+  box-decoration-break: slice;
+  box-shadow: 4px 4px 5px #242424;
+  border-radius: 5px;
+  padding: 4%;
+}
+.form-div{
+  padding: 3%;
+}
+form{
+  text-transform: capitalize;
+  font-weight: 900;
+  font-family: sans-serif;
+}
+form p{
+  margin-bottom: 4%;
+  font-style: italic;
+  font-weight: lighter;
+  color: gray;
+}
+.success-div{
+  color: green;
+  font-style: oblique;
+  font-weight: bold;
+}
+.error-div{
+  color: red;
+  font-style: oblique;
+  font-weight: bold;
+}
+.form-group{
+  padding: 1.5%;
+}
+.form-control{
+  border-radius: 5px;
+  box-shadow: 4px 4px 5px black;
+  height: 5vh;
+  width: 55%;
+}
+.link{
+  margin-top: -3%;
+  font-style: italic;
+}
+.forgot{
+  font-size: 12px;
+  text-align: center;
+  font-weight: 900;
+  margin-left: 25%;
+}
+.link-a{
+  text-decoration: none;
+  font-style: italic;
+  color: #116466;
+  font-weight: 900;
+
+}
+.link-a:hover{
+  color: #242424;
+}
+.link-a:visited{
+  color: #116466;
+}
+.btn{
+  border: 1px solid #116466;
+  background-color: #116466;
+  color: black;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 2%;
+  cursor: pointer;
+}
+.btn:hover{
+  color: #242424;
+  background-color: green;
+}
+.dark-div{
+  position: fixed;
+  margin-top: 15%;
+}
+.dark-mode-active{
+  background-color: #242424;
+  color: red;
+}
