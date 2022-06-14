@@ -1,92 +1,41 @@
-*{
+@import url("https://fonts.googleapis.com/css?family=Maven+Pro:400,500,600,700,800,900&display=swap");
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Maven Pro", sans-serif;
 }
-.wrapper{
-  background-color: #D1E8E2;
-  text-align: center;
-  width: 50%;
-  margin-top: 10%;
-  box-decoration-break: slice;
-  box-shadow: 4px 4px 5px #242424;
-  border-radius: 5px;
-  padding: 4%;
+.wrapper {
+  height: 100vh;
 }
-.form-div{
-  padding: 3%;
+.myColor {
+  background-image: linear-gradient(to right, #2C3531 40%, #116466 150%);
 }
-form{
-  text-transform: capitalize;
-  font-weight: 900;
-  font-family: sans-serif;
+.myShadow {
+  box-shadow: 0 10px 10px rgba(1.5, 1.5, 1.5, 0.5);
 }
-form p{
-  margin-bottom: 4%;
-  font-style: italic;
-  font-weight: lighter;
-  color: gray;
-}
-.success-div{
-  color: green;
-  font-style: oblique;
+.myBtn {
+  border-radius: 50px;
   font-weight: bold;
-}
-.error-div{
-  color: red;
-  font-style: oblique;
-  font-weight: bold;
-}
-.form-group{
-  padding: 1.5%;
-}
-.form-control{
-  border-radius: 5px;
-  box-shadow: 4px 4px 5px black;
-  height: 5vh;
-  width: 55%;
-}
-.link{
-  margin-top: -3%;
-  font-style: italic;
-}
-.forgot{
-  font-size: 12px;
-  text-align: center;
-  font-weight: 900;
-  margin-left: 25%;
-}
-.link-a{
-  text-decoration: none;
-  font-style: italic;
-  color: #116466;
-  font-weight: 900;
-
-}
-.link-a:hover{
-  color: #242424;
-}
-.link-a:visited{
-  color: #116466;
-}
-.btn{
-  border: 1px solid #116466;
-  background-color: #116466;
-  color: black;
   font-size: 20px;
-  border-radius: 5px;
-  padding: 2%;
-  cursor: pointer;
+  background-image: linear-gradient(to right, #0acffe 0%, #495aff 100%);
+  border: none;
 }
-.btn:hover{
-  color: #242424;
-  background-color: green;
+.myBtn:hover {
+  background-image: linear-gradient(to right, #495aff 0%, #0acffe 100%);
 }
-.dark-div{
-  position: fixed;
-  margin-top: 15%;
+.myHr {
+  height: 2px;
+  border-radius: 100px;
 }
-.dark-mode-active{
-  background-color: #242424;
-  color: red;
+.myLinkBtn {
+  border-radius: 100px;
+  width: 50%;
+  border: 2px solid #fff;
+}
+@media (max-width: 720px) {
+  .wrapper {
+    margin: 2px;
+  }
 }
