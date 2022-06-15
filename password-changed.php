@@ -25,9 +25,13 @@ if($_SESSION['info'] == false){
 }
 </script>
 
-  <center>
-    <div class="wrapper">
-            <div class="form-div">
+<div class="container">
+  <div class="row justify-content-center wrapper" id="user-otp-box">
+    <div class="col-lg-10 my-auto effects-bg">
+      <div class="row">
+        <div class="col-lg-7 bg-white p-4">
+          <h1 class="text-center font-weight-bold text-primary">code</h1>
+          <hr class="my-3" />
             <?php
             if(isset($_SESSION['info'])){
                 ?>
@@ -44,7 +48,9 @@ if($_SESSION['info'] == false){
                 </form>
             </div>
         </div>
-</center>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

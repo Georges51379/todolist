@@ -1,9 +1,5 @@
 <?php
-require 'dataProcessing.php';
-
-if(strlen($_SESSION['email']) == 0){
-	header('location: login-user');
-}
+require_once "dataProcessing.php";
 
  ?>
 
@@ -22,16 +18,29 @@ if(strlen($_SESSION['email']) == 0){
 		<link href="img/icons/logo.png" rel="shortcut icon">
   </head>
 
-  <body class="bg-info">
+  <body>
     <div class="container">
       <!-- Login Form Start -->
       <div class="row justify-content-center wrapper" id="login-box">
-        <div class="col-lg-10 my-auto myShadow">
+        <div class="col-lg-10 my-auto effects-bg">
           <div class="row">
             <div class="col-lg-7 bg-white p-4">
               <h1 class="text-center font-weight-bold text-primary">Sign in</h1>
               <hr class="my-3" />
               <form action="#" method="post" class="px-3" id="login-form">
+								<?php
+								if(count($errors) > 0){
+										?>
+										<div class="error-div">
+												<?php
+												foreach($errors as $showerror){
+														echo $showerror;
+												}
+												?>
+										</div>
+										<?php
+								}
+								?>
                 <div class="input-group input-group-lg form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text rounded-0"><i class="far fa-envelope fa-lg fa-fw"></i></span>
@@ -50,7 +59,7 @@ if(strlen($_SESSION['email']) == 0){
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="submit" id="login-btn" value="Sign In" class="btn btn-primary btn-lg btn-block myBtn" />
+                  <input type="submit" name="login" id="login-btn" value="Sign In" class="btn btn-primary btn-lg btn-block myBtn" />
                 </div>
               </form>
             </div>
@@ -66,7 +75,7 @@ if(strlen($_SESSION['email']) == 0){
       <!-- Login Form End -->
       <!-- Registration Form Start -->
       <div class="row justify-content-center wrapper" id="register-box" style="display: none;">
-        <div class="col-lg-10 my-auto myShadow">
+        <div class="col-lg-10 my-auto effects-bg">
           <div class="row">
             <div class="col-lg-5 d-flex flex-column justify-content-center bg-img p-4">
               <h1 class="text-center font-weight-bold text-white">Hello User!</h1>
@@ -77,7 +86,32 @@ if(strlen($_SESSION['email']) == 0){
             <div class="col-lg-7 bg-white p-4">
               <h1 class="text-center font-weight-bold text-primary">Create Account</h1>
               <hr class="my-3" />
-              <form action="#" method="post" class="px-3" id="register-form">
+              <form action="index.php" method="post" class="px-3" id="register-form">
+								<?php
+								if(count($errors) == 1){
+										?>
+										<div class="alert alert-danger text-center">
+												<?php
+												foreach($errors as $showerror){
+														echo $showerror;
+												}
+												?>
+										</div>
+										<?php
+								}elseif(count($errors) > 1){
+										?>
+										<div class="alert alert-danger">
+												<?php
+												foreach($errors as $showerror){
+														?>
+														<li><?php echo $showerror; ?></li>
+														<?php
+												}
+												?>
+										</div>
+										<?php
+								}
+								?>
                 <div class="input-group input-group-lg form-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text rounded-0"><i class="far fa-user fa-lg fa-fw"></i></span>
@@ -106,7 +140,7 @@ if(strlen($_SESSION['email']) == 0){
                   <div id="passError" class="text-danger font-weight-bolder"></div>
                 </div>
                 <div class="form-group">
-                  <input type="submit" id="register-btn" value="Sign Up" class="btn btn-primary btn-lg btn-block myBtn" />
+                  <input type="submit" name="signup" id="register-btn" value="Sign Up" class="btn btn-primary btn-lg btn-block myBtn" />
                 </div>
               </form>
             </div>
@@ -116,7 +150,7 @@ if(strlen($_SESSION['email']) == 0){
       <!-- Registration Form End -->
       <!-- Forgot Password Form Start -->
       <div class="row justify-content-center wrapper" id="forgot-box" style="display: none;">
-        <div class="col-lg-10 my-auto myShadow">
+        <div class="col-lg-10 my-auto effects-bg">
           <div class="row">
             <div class="col-lg-7 bg-white p-4">
               <h1 class="text-center font-weight-bold text-primary">Forgot Your Password?</h1>

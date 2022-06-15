@@ -42,9 +42,13 @@ if($email == false){
 }
 </script>
 
-  <center>
-    <div class="wrapper">
-            <div class="form-div">
+<div class="container">
+  <div class="row justify-content-center wrapper" id="user-otp-box">
+    <div class="col-lg-10 my-auto effects-bg">
+      <div class="row">
+        <div class="col-lg-7 bg-white p-4">
+          <h1 class="text-center font-weight-bold text-primary">code</h1>
+          <hr class="my-3" />
                 <form action="new-password.php" method="POST" autocomplete="off">
                     <h2 class="text-center">New Password</h2>
                     <?php
@@ -69,20 +73,28 @@ if($email == false){
                         <?php
                     }
                     ?>
-                    <div class="form-group">
-                        <input class="form-control" id="password" type="password" onblur="checkPassword()" name="password" placeholder="Create new password" required>
-                        <br><span id="passwordAvailability"></span>
+                    <div class="input-group input-group-lg form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text rounded-0"><i class="fas fa-key fa-lg fa-fw"></i></span>
+                      </div>
+                      <input type="password" id="password" name="password" onblur="checkPassword()" class="form-control rounded-0" minlength="5" placeholder="Password" required />
+                      <br><span id="passwordAvailability"></span>
+                    </div>
+                    <div class="input-group input-group-lg form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text rounded-0"><i class="fas fa-key fa-lg fa-fw"></i></span>
+                      </div>
+                      <input type="password" id="cpassword" name="cpassword" class="form-control rounded-0" minlength="5" placeholder="Confirm Password" required />
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="password" name="cpassword" placeholder="Confirm your password" required>
-                    </div>
-                    <div class="form-group">
-                        <input class="btn" id="btn" type="submit" name="change-password" value="Change">
+                      <input type="submit" name="change-password" id="change-password-btn" value="Change Password" class="btn btn-primary btn-lg btn-block myBtn" />
                     </div>
                 </form>
             </div>
         </div>
-</center>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

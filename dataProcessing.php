@@ -24,7 +24,7 @@ if (isset($_POST['signup'])){
     $status = "notverified";
     $userStatus = 1;
     $insert_query = mysqli_query($con,"INSERT INTO usertable (name, email, password, code, status, userStatus)
-                    values('$name', '$email', '$hashedpwd', '$code', '$status', 1)");
+                    values('$name', '$email', '$hashedpwd', '$code', '$status', 'active')");
     if($insert_query){
       $subject = "Email Verification Code";
       $message = "Your verification code is $code";
@@ -60,7 +60,7 @@ if (isset($_POST['signup'])){
       if($updated_check_code_query){
         $_SESSION['name'] = $name;
         $_SESSION['email'] = $email;
-        header('location: index.php');
+        header('location: dashboard.php');
         exit();
       }else{
           $errors['otp-error'] = "Failed while updating code!";
@@ -73,7 +73,7 @@ if (isset($_POST['signup'])){
   if(isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $query = mysqli_query($con, "SELECT * FROM usertable WHERE email = '$email' AND userStatus = 1 ");
+    $query = mysqli_query($con, "SELECT * FROM usertable WHERE email = '$email' AND userStatus = 'active' ");
     $row = mysqli_num_rows($query);
     if($row > 0){
       $rw = mysqli_fetch_array($query);
@@ -88,7 +88,7 @@ if (isset($_POST['signup'])){
             $uip=$_SERVER['REMOTE_ADDR'];
             $stat=1;
             $userLogQuery=mysqli_query($con,"INSERT INTO userlog(userEmail,userIp,status) VALUES('".$_SESSION['email']."','$uip','$stat')");
-              header('location: index.php');
+              header('location: dashboard.php');
             }else{
                 $info = "It looks like you haven't verified your email - $email";
                 $_SESSION['info'] = $info;
@@ -173,6 +173,6 @@ if(isset($_POST['change-password'])){
 }
 //PASSWORDCHANGED SECTION (PASSWORD-cHANGED.PHP)
  if(isset($_POST['login-now'])){
-     header('Location: index.php');
+     header('Location: dashboard.php');
  }
 ?>
