@@ -22,9 +22,10 @@ if (isset($_POST['signup'])){
     $hashedpwd = password_hash($password, PASSWORD_BCRYPT);
     $code = rand(999999, 111111);
     $status = "notverified";
-    $userStatus = 1;
-    $insert_query = mysqli_query($con,"INSERT INTO usertable (name, email, password, code, status, userStatus)
-                    values('$name', '$email', '$hashedpwd', '$code', '$status', 'active')");
+    $hashedString = bin2hex(random_bytes(20));
+    $_SESSION['userToken'] = $hashedString;
+    $insert_query = mysqli_query($con,"INSERT INTO usertable (userToken, name, email, password, code, status, userStatus)
+                    VALUES('".$_SESSION['userToken']."' ,'$name', '$email', '$hashedpwd', '$code', '$status', 'active')");
     if($insert_query){
       $subject = "Email Verification Code";
       $message = "Your verification code is $code";
@@ -33,6 +34,8 @@ if (isset($_POST['signup'])){
           $info = "We've sent a verification code to your email - $email";
           $_SESSION['info'] = $info;
           $_SESSION['email'] = $email;
+          $userToken = $_SESSION['userToken'];
+          $_SESSION['userToken'] = $userToken;
           $_SESSION['password'] = $password;
           header('location: user-otp.php');
           exit();
@@ -73,7 +76,7 @@ if (isset($_POST['signup'])){
   if(isset($_POST['login'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $query = mysqli_query($con, "SELECT * FROM usertable WHERE email = '$email' AND userStatus = 'active' ");
+    $query = mysqli_query($con, "SELECT * FROM usertable WHERE email = '$email' AND userStatus = 'active'");
     $row = mysqli_num_rows($query);
     if($row > 0){
       $rw = mysqli_fetch_array($query);
@@ -82,7 +85,7 @@ if (isset($_POST['signup'])){
           $_SESSION['email'] = $email;
           $status = $rw['status'];
           if($status == 'verified'){
-            $_SESSION['email'] = $email;
+            $_SESSION['userToken'] = $rw['userToken'];
             $_SESSION['last_login_timestamp'] = time();
             $_SESSION['password'] = $password;
             $uip=$_SERVER['REMOTE_ADDR'];

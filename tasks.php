@@ -4,18 +4,18 @@ require 'db/connection.php';
 if(strlen($_SESSION['email'])==0){
 	header('location: index.php');
 }
-else {
-$tid=intval($_GET['taskid']);
+else{
+$task = $_GET['prjtk'];
 
 	if(isset($_POST['add']))
 	{
-		if( isset($_POST['tasks']) && !empty($_POST['tasks']) ) // Be sure the task brought here is not an empty field
+		if(isset($_POST['tasks']) && !empty($_POST['tasks']) ) // Be sure the task brought here is not an empty field
 		{
 			// Variable declaration
 			$task = trim(strip_tags(htmlspecialchars($_POST['tasks'])));
 
 			// Save the task into the database
-			mysqli_query($con, "insert into `task` (projectID, tasks, status) values($tid, '".mysqli_real_escape_string($con, $task)."', '".mysqli_real_escape_string($con, 'Pending')."')") or die(mysqli_errno());
+			mysqli_query($con, "INSERT INTO `task` (projectToken, tasks, status) values($task, '".mysqli_real_escape_string($con, $task)."', '".mysqli_real_escape_string($con, 'Pending')."')") or die(mysqli_errno());
 			echo "<a href='tasks.php?<?php echo htmlentities $tid; ?>'></a>";  // Redirect back to index.php page
 		}
 		else
@@ -29,7 +29,7 @@ $tid=intval($_GET['taskid']);
 		header('location:index.php');
 	}
 }
-	$projectQuery= mysqli_query($con, "select * from project where id='$tid'");
+	$projectQuery= mysqli_query($con, "SELECT * FROM project WHERE projectToken='".$_GET['prjtk']."'");
 	$rw= mysqli_fetch_array($projectQuery);
  ?>
 <html>

@@ -24,7 +24,7 @@
   <center>
     <div class="wrapper">
         <div class="form-div">
-                <form action="forgot-password.php" method="POST" autocomplete="">
+                <form class="px-3" action="forgot-password.php" method="POST" autocomplete="">
                     <h2>Forgot Password</h2>
                     <p>Enter your email address</p>
                     <?php

@@ -37,6 +37,56 @@ body{
   width: 50%;
   border: 2px solid #fff;
 }
+
+/*Dashboard SECTION STYLE*/
+.navbar-brand{
+  font-weight: bolder;
+  transform: rotate(15deg);
+  text-transform: uppercase;
+  font-style: oblique;
+  font-family: sans-serif;
+}
+.card-product .img-wrap {
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    position: relative;
+    height: 220px;
+    text-align: center;
+}
+.card-product .img-wrap img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+.card-product .info-wrap {
+    overflow: hidden;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+.card-product .bottom-wrap {
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.label-rating { margin-right:10px;
+    color: #333;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card-product .price-old {
+    color: #999;
+}
+/*END DASHBOARD SECTION STYLE*/
+
+
+
+
+
+
+
+
+
 @media (max-width: 720px) {
   .wrapper {
     margin: 2px;

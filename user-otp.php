@@ -22,7 +22,7 @@ if($email == false){
           <div class="col-lg-7 bg-white p-4">
             <h1 class="text-center font-weight-bold text-primary">code</h1>
             <hr class="my-3" />
-                <form action="user-otp.php" method="POST" autocomplete="off">
+                <form class="px-3" action="user-otp.php" method="POST" autocomplete="off">
                     <h2 class="text-center">Code Verification</h2>
                     <?php
                     if(isset($_SESSION['info'])){

@@ -165,7 +165,7 @@ require_once "dataProcessing.php";
                   <input type="email" id="femail" name="email" class="form-control rounded-0" placeholder="E-Mail" required />
                 </div>
                 <div class="form-group">
-                  <input type="submit" id="forgot-btn" value="Reset Password" class="btn btn-primary btn-lg btn-block myBtn" />
+                  <input type="submit" name="forgotpwd" id="forgot-btn" value="Reset Password" class="btn btn-primary btn-lg btn-block myBtn" />
                 </div>
               </form>
             </div>

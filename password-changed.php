@@ -41,7 +41,7 @@ if($_SESSION['info'] == false){
                 <?php
             }
             ?>
-                <form action="index.php" method="POST">
+                <form action="index.php" class="px-3" method="POST">
                     <div class="form-group">
                         <input class="btn" type="submit" name="login-now" value="Login Now">
                     </div>

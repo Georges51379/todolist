@@ -33,7 +33,7 @@ if($email == false){
         <div class="col-lg-7 bg-white p-4">
           <h1 class="text-center font-weight-bold text-primary">code</h1>
           <hr class="my-3" />
-                <form action="reset-code.php" method="POST" autocomplete="off">
+                <form action="reset-code.php" class="px-3" method="POST" autocomplete="off">
                     <h2>RESET Code Verification</h2>
                     <?php
                     if(isset($_SESSION['info'])){
@@ -72,6 +72,6 @@ if($email == false){
       </div>
     </div>
   </div>
-  
+
 </body>
 </html>
