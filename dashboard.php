@@ -11,6 +11,20 @@ else{
 $userQuery = mysqli_query($con, "SELECT name FROM usertable WHERE userToken = '".$_SESSION['userToken']."'");
 $rw = mysqli_fetch_array($userQuery);
 
+if(isset($_POST['addProject'])){
+
+  $projectName = $_POST['projectName'];
+  $projectDescription = $_POST['projectDescription'];
+  $dueDate = $_POST['dueDate'];
+
+  $hashedString = bin2hex(random_byte(20));
+  $_SESSION['projectToken'] = $hashedString;
+
+   mysqli_query($con, "INSERT INTO project(userToken, projectToken, projectName, projectDescription, dueDate, status)
+                    VALUES('".$_SESSION['userToken']."', '".$_SESSION['projectToken']."', '$projectName', '$projectDescription', '$dueDate', 'active')");
+  echo "alert('Project has been successfully addded!');";
+}
+
  ?>
 
 <html lang="en">
@@ -20,6 +34,8 @@ $rw = mysqli_fetch_array($userQuery);
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+      <!-- Fontawesome CSS CDN -->
+   	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
       <title><?php echo htmlentities($rw['name']); ?> | Dashboard</title>
       <link href="img/icons/logo.png" rel="shortcut icon">
       <link href="css/style.css" rel="stylesheet">
@@ -37,15 +53,59 @@ $rw = mysqli_fetch_array($userQuery);
                      <a class="nav-link" href="dashboard.php">Home</a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" href="projects.php">add project</a>
-                  </li>
-                  <li class="nav-item">
                      <a class="nav-link" href="logout-user.php">logout</a>
                   </li>
                </ul>
             </div>
          </nav>
       </div>
+
+      <!-- START Modal SECTION -->
+
+      <div class="col-lg-7 bg-white p-4">
+        <h1 class="text-center font-weight-bold text-primary">Sign in</h1>
+        <hr class="my-3" />
+        <form action="#" method="post" class="px-3" id="login-form">
+          <?php
+          if(count($errors) > 0){
+              ?>
+              <div class="error-div">
+                  <?php
+                  foreach($errors as $showerror){
+                      echo $showerror;
+                  }
+                  ?>
+              </div>
+              <?php
+          }
+          ?>
+          <div class="input-group input-group-lg form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text rounded-0"><i class="far fa-envelope fa-lg fa-fw"></i></span>
+            </div>
+            <input type="text" id="projectName" name="projectName" class="form-control rounded-0" placeholder="Project Name" required />
+          </div>
+          <div class="input-group input-group-lg form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text rounded-0"><i class="fas fa-key fa-lg fa-fw"></i></span>
+            </div>
+            <input type="text" id="projectDescription" name="projectDescription" class="form-control rounded-0"  placeholder="Project Description" required autocomplete="off" />
+          </div>
+
+          <div class="input-group input-group-lg form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text rounded-0"><i class="fas fa-calendar fa-lg fa-fw"></i></span>
+            </div>
+            <input type="date" id="dueDate" name="dueDate" class="form-control rounded-0" placeholder="Due Date" required autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <input type="submit" name="addProject" id="addProject" value="Add Project" class="btn btn-primary btn-lg btn-block myBtn" />
+          </div>
+        </form>
+      </div>
+
+<!--END MODAL SECTION-->
+
 <br><br><br>
     <div class="container grid">
         <?php

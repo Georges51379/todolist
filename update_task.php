@@ -6,23 +6,23 @@ require_once 'db/connection.php';
 if(isset($_SERVER["REQUEST_METHOD"]) && strip_tags($_SERVER["REQUEST_METHOD"]) == strip_tags("GET"))
 {
 
-	if(isset($_GET['task_id']) && !empty($_GET['task_id'])) // Be sure the task ID brought here is not an empty field
+	if(isset($_GET['taskToken']) && !empty($_GET['taskToken'])) // Be sure the task ID brought here is not an empty field
 	{
 		// Variable declaration
-		$task_id = trim(strip_tags($_GET['task_id']));
+		$taskToken = trim(strip_tags($_GET['taskToken']));
 
-		mysqli_query($con, "update `task` set `status` = '".mysqli_real_escape_string($con, 'Completed')."' where `task_id` = '".mysqli_real_escape_string($con, $task_id)."' limit 1") or die(mysqli_errno());
+		mysqli_query($con, "UPDATE `task` SET `status` = '".mysqli_real_escape_string($con, 'Completed')."' WHERE `taskToken` = '".mysqli_real_escape_string($con, $taskToken)."' limit 1") or die(mysqli_errno());
 
-		echo "<script>window.location='index.php'</script>";  // Redirect back to index.php page
+		echo "<script>window.location='dashboard.php'</script>";  // Redirect back to index.php page
 	}
 	else
 	{
-		echo "<script>window.location='index.php'</script>";  // Redirect back to index.php page
+		echo "<script>window.location='dashboard.php'</script>";  // Redirect back to index.php page
 	}
 }
 else
 {
-	echo "<script>window.location='index.php'</script>";
+	echo "<script>window.location='dashboard.php'</script>";
 	// Deny access if the request brought to this page is a GET REQUEST
 }
 ?>

@@ -11,12 +11,13 @@ $task = $_GET['prjtk'];
 	{
 		if(isset($_POST['tasks']) && !empty($_POST['tasks']) ) // Be sure the task brought here is not an empty field
 		{
-			// Variable declaration
-			$task = trim(strip_tags(htmlspecialchars($_POST['tasks'])));
+			$tasks = $_POST['tasks'];
+			$hashedString = bin2hex(random_bytes(20));
+			$_SESSION['taskToken'] = $hashedString;
 
 			// Save the task into the database
-			mysqli_query($con, "INSERT INTO `task` (projectToken, tasks, status) values($task, '".mysqli_real_escape_string($con, $task)."', '".mysqli_real_escape_string($con, 'Pending')."')") or die(mysqli_errno());
-			echo "<a href='tasks.php?<?php echo htmlentities $tid; ?>'></a>";  // Redirect back to index.php page
+			mysqli_query($con, "INSERT INTO task (taskToken, projectToken, tasks, status) values('".$_SESSION['taskToken']."', '$task', '$tasks', 'Pending')");
+			echo "<a href='tasks.php?taskToken=<?php echo htmlentities $task; ?>'></a>";  // Redirect back to index.php page
 		}
 		else
 		{
@@ -25,10 +26,15 @@ $task = $_GET['prjtk'];
 	}
 
 	if(isset($_POST['deleteproject'])){
-		$query = mysqli_query ($con, "update project set status=0 where id='$tid'");
-		header('location:index.php');
+		$query = mysqli_query ($con, "UPDATE project SET status='inactive' WHERE projectToken='".$_GET['prjtk']."'");
+		header('location:dashboard.php');
+	}
+	if(isset($_POST['truncatetasks'])){
+		$query = mysqli_query ($con, "DELETE FROM task WHERE projectToken='".$_GET['prjtk']."'");
+		echo "<a href='tasks.php?taskToken=<?php echo htmlentities $task; ?>'></a>";
 	}
 }
+
 	$projectQuery= mysqli_query($con, "SELECT * FROM project WHERE projectToken='".$_GET['prjtk']."'");
 	$rw= mysqli_fetch_array($projectQuery);
  ?>
@@ -55,8 +61,10 @@ $task = $_GET['prjtk'];
 		<?php  echo htmlentities ($rw['projectName']); ?>
 	</div>
 </header>
+
+
 <div class="backbtn">
-	<a href="index.php" class="backlink"><i class="fa fa-arrow-left"></i></a>
+	<a href="dashboard.php" class="backlink"><i class="fa fa-arrow-left"></i></a>
 </div>
 <div class="dark-div">
 	<button href="#" onclick="darkMode()" class="dark-mode-active"><i class="fa fa-user"></i></button>
@@ -67,6 +75,7 @@ function darkMode(){
 	element.classList.toggle("dark-mode-active");
 }
 </script>
+
 <center>
 <div class="project-description">
 	<?php echo htmlentities ($rw['projectDescription']); ?>
@@ -75,12 +84,16 @@ function darkMode(){
 <form class="form" method="post">
 	<button class="deletebtn" name="deleteproject">delete project</button>
 </form>
+<form class="form" method="post">
+	<button class="truncateTable" name="truncatetasks">empty tasks</button>
+</form>
 <br><br>
-<?php $query= mysqli_query($con, "select * from banners where form='portrait'");
+
+<?php $query= mysqli_query($con, "SELECT * FROM banners WHERE form='landscape'");
 $row= mysqli_fetch_array($query); ?>
 
 <div class="banner-landscape">
-	<a href="<?php echo htmlentities($orw['url']);?>" target="_blank">
+	<a href="<?php echo htmlentities($row['url']);?>" target="_blank">
 	<img class="img-ad-landscape" src="admin/banners/<?php echo htmlentities($row['image']); ?>"
 	data-echo="admin/banners/<?php echo htmlentities($row['image']);?>">
 </a>
@@ -98,7 +111,7 @@ $row= mysqli_fetch_array($query); ?>
     </div>
     <br><br>
     <?php
-    $query=mysqli_query($con, "SELECT * FROM task WHERE projectID=$tid");
+    $query=mysqli_query($con, "SELECT * FROM task WHERE projectToken='".$_GET['prjtk']."'");
     $rows=mysqli_num_rows($query);
 
     echo"<br><br>";
@@ -108,7 +121,7 @@ $row= mysqli_fetch_array($query); ?>
      ?>
     <br><br>
     <?php
-    	$query=mysqli_query($con, "SELECT * FROM task WHERE projectID=$tid AND status='Completed'");
+    	$query=mysqli_query($con, "SELECT * FROM task WHERE projectToken='".$_GET['prjtk']."' AND status='Completed'");
     	$statement=mysqli_num_rows($query);
     ?>
     <div class="completed-tasks">
@@ -122,7 +135,7 @@ $row= mysqli_fetch_array($query); ?>
     </div>
 
     <?php
-    $query=mysqli_query($con, "SELECT * FROM task WHERE projectID=$tid AND status='Pending'");
+    $query=mysqli_query($con, "SELECT * FROM task WHERE projectToken='".$_GET['prjtk']."' AND status='Pending'");
     $st=mysqli_num_rows($query);
     ?>
     <div class="uncompleted-tasks">
@@ -148,7 +161,7 @@ $row= mysqli_fetch_array($query); ?>
                   <?php
 
               // Check for all the task in the database and if there is task, get them
-                  if( mysqli_num_rows( $query = mysqli_query($con, "select * from task where projectID=$tid")) )
+                  if( mysqli_num_rows( $query = mysqli_query($con, "SELECT * FROM task WHERE projectToken='".$_GET['prjtk']."'")) )
                   {
                       $count = 1;
                 // Fetch all the tasks brought from the database and display them below
@@ -162,10 +175,10 @@ $row= mysqli_fetch_array($query); ?>
                               <td colspan="2">
                                   <?php
                                   if(isset($row['status']) && $row['status'] != "Completed"){
-                                      echo '<a href="update_task.php?task_id='.$row['task_id'].'" <i class="fa fa-check" title="Complete Task"></i></a>&nbsp;&nbsp;';
+                                      echo '<a href="update_task.php?taskToken='.$row['taskToken'].'" <i class="fa fa-check" title="Complete Task"></i></a>&nbsp;&nbsp;';
                                   }
                                   ?>
-                                   <a class="icon" href="delete_task.php?task_id=<?php echo $row['task_id']?>"><i class="fa fa-trash" title="Delete Task"></i></a>
+                                   <a class="icon" href="delete_task.php?taskToken=<?php echo $row['taskToken']?>"><i class="fa fa-trash" title="Delete Task"></i></a>
                               </td>
                           </tr>
                           <?php
