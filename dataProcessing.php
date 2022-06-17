@@ -5,6 +5,24 @@ $email = "";
 $name = "";
 $errors = array();
 
+
+if(isset($_POST['addProject'])){
+
+  $projectName = $_POST['projectName'];
+  $projectDescription = $_POST['projectDescription'];
+  $dueDate = $_POST['dueDate'];
+
+  $hashedString = bin2hex(random_bytes(20));
+  $_SESSION['projectToken'] = $hashedString;
+
+   mysqli_query($con, "INSERT INTO project(userToken, projectToken, projectName, projectDescription, dueDate, status)
+                    VALUES('".$_SESSION['userToken']."', '".$_SESSION['projectToken']."', '$projectName', '$projectDescription', '$dueDate', 'active')");
+  echo "alert('Project has been successfully addded!');";
+}
+
+
+
+
 if (isset($_POST['signup'])){
   $name = $_POST['name'];
   $email = $_POST['email'];

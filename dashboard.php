@@ -1,7 +1,6 @@
 <?php
-session_start();
 error_reporting(0);
-include 'db/connection.php';
+require_once "dataProcessing.php";
 
 if(strlen($_SESSION['userToken']) == 0){
   header('location: index.php');
@@ -10,20 +9,6 @@ else{
 
 $userQuery = mysqli_query($con, "SELECT name FROM usertable WHERE userToken = '".$_SESSION['userToken']."'");
 $rw = mysqli_fetch_array($userQuery);
-
-if(isset($_POST['addProject'])){
-
-  $projectName = $_POST['projectName'];
-  $projectDescription = $_POST['projectDescription'];
-  $dueDate = $_POST['dueDate'];
-
-  $hashedString = bin2hex(random_byte(20));
-  $_SESSION['projectToken'] = $hashedString;
-
-   mysqli_query($con, "INSERT INTO project(userToken, projectToken, projectName, projectDescription, dueDate, status)
-                    VALUES('".$_SESSION['userToken']."', '".$_SESSION['projectToken']."', '$projectName', '$projectDescription', '$dueDate', 'active')");
-  echo "alert('Project has been successfully addded!');";
-}
 
  ?>
 
@@ -52,6 +37,11 @@ if(isset($_POST['addProject'])){
                   <li class="nav-item active">
                      <a class="nav-link" href="dashboard.php">Home</a>
                   </li>
+                  <li class="nav-item active">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddProjectModal">
+                      Open modal
+                    </button>
+                  </li>
                   <li class="nav-item">
                      <a class="nav-link" href="logout-user.php">logout</a>
                   </li>
@@ -62,23 +52,16 @@ if(isset($_POST['addProject'])){
 
       <!-- START Modal SECTION -->
 
-      <div class="col-lg-7 bg-white p-4">
-        <h1 class="text-center font-weight-bold text-primary">Sign in</h1>
-        <hr class="my-3" />
-        <form action="#" method="post" class="px-3" id="login-form">
-          <?php
-          if(count($errors) > 0){
-              ?>
-              <div class="error-div">
-                  <?php
-                  foreach($errors as $showerror){
-                      echo $showerror;
-                  }
-                  ?>
-              </div>
-              <?php
-          }
-          ?>
+      <div class="modal fade" id="AddProjectModal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+
+            <div class="modal-header">
+                  <h4 class="modal-title">Add Project</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+             <div class="modal-body">
+        <form action="dashboard.php" method="post" class="px-3" id="addProject-form">
           <div class="input-group input-group-lg form-group">
             <div class="input-group-prepend">
               <span class="input-group-text rounded-0"><i class="far fa-envelope fa-lg fa-fw"></i></span>
@@ -103,6 +86,9 @@ if(isset($_POST['addProject'])){
           </div>
         </form>
       </div>
+    </div>
+  </div>
+</div>
 
 <!--END MODAL SECTION-->
 
