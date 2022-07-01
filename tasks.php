@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'db/connection.php';
-if(strlen($_SESSION['email'])==0){
+if(strlen($_SESSION['td_email'])==0){
 	header('location: index.php');
 }
 else{

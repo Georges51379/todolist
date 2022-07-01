@@ -51,7 +51,7 @@ if (isset($_POST['signup'])){
       if(mail($email, $subject, $message, $sender)){
           $info = "We've sent a verification code to your email - $email";
           $_SESSION['info'] = $info;
-          $_SESSION['email'] = $email;
+          $_SESSION['td_email'] = $email;
           $userToken = $_SESSION['userToken'];
           $_SESSION['userToken'] = $userToken;
           $_SESSION['password'] = $password;
@@ -80,7 +80,7 @@ if (isset($_POST['signup'])){
       $updated_check_code_query = mysqli_query($con, "UPDATE usertable SET code = '$code', status = '$status' WHERE code = '$fetch_code'");
       if($updated_check_code_query){
         $_SESSION['name'] = $name;
-        $_SESSION['email'] = $email;
+        $_SESSION['td_email'] = $email;
         header('location: dashboard.php');
         exit();
       }else{
@@ -100,7 +100,7 @@ if (isset($_POST['signup'])){
       $rw = mysqli_fetch_array($query);
       $fetched_pwd = $rw['password'];
       if(password_verify($password, $fetched_pwd)){
-          $_SESSION['email'] = $email;
+          $_SESSION['td_email'] = $email;
           $status = $rw['status'];
           if($status == 'verified'){
             $_SESSION['userToken'] = $rw['userToken'];
@@ -108,7 +108,7 @@ if (isset($_POST['signup'])){
             $_SESSION['password'] = $password;
             $uip=$_SERVER['REMOTE_ADDR'];
             $stat=1;
-            $userLogQuery=mysqli_query($con,"INSERT INTO userlog(userEmail,userIp,status) VALUES('".$_SESSION['email']."','$uip','$stat')");
+            $userLogQuery=mysqli_query($con,"INSERT INTO userlog(userEmail,userIp,status) VALUES('".$_SESSION['td_email']."','$uip','$stat')");
               header('location: dashboard.php');
             }else{
                 $info = "It looks like you haven't verified your email - $email";
@@ -139,7 +139,7 @@ if(isset($_POST['forgotpwd'])){
       if(mail($email, $subject, $message, $sender)){
           $info = "We've sent a password reset code to your email - $email";
           $_SESSION['info'] = $info;
-          $_SESSION['email'] = $email;
+          $_SESSION['td_email'] = $email;
           header('location: reset-code.php');
           exit();
         }else{
@@ -161,7 +161,7 @@ if(isset($_POST['check-reset-otp'])){
   if($rows > 0){
     $rw = mysqli_fetch_array($query);
     $email = $rw['email'];
-    $_SESSION['email'] = $email;
+    $_SESSION['td_email'] = $email;
     $info = "Please enter a password that you do not use on any other accounts";
     $_SESSION['info'] = $info;
     header('location: new-password.php');
@@ -180,7 +180,7 @@ if(isset($_POST['change-password'])){
     $errors['password'] = "Password do no match!!!";
   }else{
       $code = 0;
-      $email = $_SESSION['email']; //getting this email using session
+      $email = $_SESSION['td_email']; //getting this email using session
       $hashedpwd = password_hash($password, PASSWORD_BCRYPT);
       $update_query = mysqli_query($con, "UPDATE usertable SET code = '$code', password = '$hashedpwd' WHERE email = '$email'");
       if($update_query){
