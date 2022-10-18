@@ -28,7 +28,7 @@ if(strlen($_SESSION['email']) == 0){
       <h3>signed in as &nbsp<br><?php echo htmlentities($rw['name']); ?></h3>
       <div class="break">.</div>&emsp;
       <ul>
-        <li class="list"><a href="index.php" class="list-links">dashboard&nbsp<i class="fa fa-dashboard"></i></a></li>
+        <li class="list"><a href="dashboard.php" class="list-links">dashboard&nbsp<i class="fa fa-dashboard"></i></a></li>
         <li class="list"><a href="users.php" class="list-links">users&nbsp<i class="fa fa-user"></i></a></li>
         <li class="list"><a href="add-users.php" class="list-links"><i class="fa fa-plus"></i>&nbspadd users</a></li>
         <li class="list"><a href="users-log.php" class="list-links"><i class="fa fa-calendar"></i>&nbsp users log</a></li>

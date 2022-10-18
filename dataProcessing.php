@@ -106,9 +106,6 @@ if (isset($_POST['signup'])){
             $_SESSION['userToken'] = $rw['userToken'];
             $_SESSION['last_login_timestamp'] = time();
             $_SESSION['password'] = $password;
-            $uip=$_SERVER['REMOTE_ADDR'];
-            $stat=1;
-            $userLogQuery=mysqli_query($con,"INSERT INTO userlog(userEmail,userIp,status) VALUES('".$_SESSION['td_email']."','$uip','$stat')");
               header('location: dashboard.php');
             }else{
                 $info = "It looks like you haven't verified your email - $email";
