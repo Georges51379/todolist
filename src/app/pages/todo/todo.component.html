@@ -1,15 +1,48 @@
 <div class="todo-page">
-    <h2>My To-Do List</h2>
-    <ul>
-      <li>
-        <input type="checkbox" /> Finish Angular UI
-      </li>
-      <li>
-        <input type="checkbox" /> Write documentation
-      </li>
-      <li>
-        <input type="checkbox" /> Deploy app
-      </li>
-    </ul>
-  </div>
+  <h2>My To-Do List</h2>
   
+  <!-- Form to add a new todo -->
+  <form class="todo-form" (ngSubmit)="addTodo()" #todoForm="ngForm">
+    <input 
+      type="text" 
+      placeholder="Enter new todo" 
+      [(ngModel)]="newTodoTitle" 
+      name="title" 
+      required 
+    />
+    <input 
+      type="date" 
+      placeholder="Deadline" 
+      [(ngModel)]="newTodoDeadline" 
+      name="deadline" 
+      required 
+    />
+    <button type="submit" [disabled]="!todoForm.form.valid">Add Todo</button>
+  </form>
+  
+  <!-- Draggable list of todos -->
+  <div cdkDropList class="todo-list" (cdkDropListDropped)="drop($event)">
+    <div 
+      *ngFor="let todo of todos; let i = index" 
+      cdkDrag 
+      class="todo-item" 
+      [class.completed]="todo.completed"
+    >
+      <!-- Drag Handle -->
+      <div class="drag-handle" cdkDragHandle>☰</div>
+      
+      <!-- Checkbox to mark as done -->
+      <input 
+        type="checkbox" 
+        [checked]="todo.completed" 
+        (change)="toggleCompleted(todo)" 
+      />
+      
+      <!-- Todo content: title and deadline -->
+      <div class="todo-content">
+        <span class="todo-title">{{ todo.title }}</span>
+        <span class="todo-deadline">{{ todo.deadline | date:'mediumDate' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

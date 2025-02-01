@@ -1,16 +1,57 @@
 <div class="note-page">
-    <h2>My Notes</h2>
-    <div class="note-card">
-      <h3>Meeting Notes</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
-    <div class="note-card">
-      <h3>Shopping List</h3>
-      <p>Milk, Eggs, Bread, Coffee.</p>
-    </div>
-    <div class="note-card">
-      <h3>Random Ideas</h3>
-      <p>Build a new productivity app, blog about Angular tips...</p>
+  <h2>My Notes</h2>
+  
+  <!-- Form to add a new note -->
+  <form class="note-form" (ngSubmit)="addNote()" #noteForm="ngForm">
+    <input 
+      type="text" 
+      placeholder="Note Title" 
+      [(ngModel)]="newNoteTitle" 
+      name="noteTitle" 
+      required
+    />
+    <textarea 
+      placeholder="Note Content" 
+      [(ngModel)]="newNoteContent" 
+      name="noteContent" 
+      required
+    ></textarea>
+    <input 
+      type="date" 
+      placeholder="Deadline" 
+      [(ngModel)]="newNoteDeadline" 
+      name="noteDeadline" 
+      required
+    />
+    <button type="submit" [disabled]="!noteForm.form.valid">Add Note</button>
+  </form>
+  
+  <!-- Draggable list of notes -->
+  <div cdkDropList class="notes-list" (cdkDropListDropped)="drop($event)">
+    <div 
+      *ngFor="let note of notes" 
+      cdkDrag 
+      class="note-card" 
+      [class.completed]="note.completed"
+    >
+      <!-- Drag Handle -->
+      <div class="drag-handle" cdkDragHandle>☰</div>
+      
+      <!-- Checkbox to mark as done -->
+      <input 
+        type="checkbox" 
+        [checked]="note.completed" 
+        (change)="toggleCompleted(note)" 
+      />
+      
+      <!-- Note Content -->
+      <div class="note-content">
+        <h3 class="note-title">{{ note.title }}</h3>
+        <p class="note-text">{{ note.content }}</p>
+        <div class="note-deadline">
+          Deadline: {{ note.deadline | date:'mediumDate' }}
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>
