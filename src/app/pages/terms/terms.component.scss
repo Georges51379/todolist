@@ -1,0 +1,27 @@
+.terms-container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #007bff;
+    }
+    p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+      color: #333;
+      text-align: justify;
+    }
+    section {
+      margin-bottom: 2rem;
+      h2 {
+        margin-bottom: 0.5rem;
+        color: #0056b3;
+      }
+      p {
+        margin: 0;
+      }
+    }
+  }
+  
