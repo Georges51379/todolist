@@ -1,0 +1,7 @@
+.app-main {
+    min-height: calc(100vh - 120px); 
+    /* Adjust to ensure footer is at bottom; 
+       120px is approx. combined nav & footer height */
+    padding: 2rem;
+  }
+  

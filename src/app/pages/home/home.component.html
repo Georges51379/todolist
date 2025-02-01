@@ -1,0 +1,12 @@
+<div class="home-container">
+    <div class="home-card">
+      <h2>{{ showLogin ? 'Welcome Back!' : 'Create an Account' }}</h2>
+      <p>{{ showLogin ? 'Please login to continue.' : 'Sign up to get started.' }}</p>
+  
+      <button class="toggle-button" (click)="toggleForm()">
+        Switch to {{ showLogin ? 'Signup' : 'Login' }}
+      </button>
+  
+    </div>
+  </div>
+  

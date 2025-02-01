@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+/* Basic reset or normalizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #fff;
+  }
+  
+  /* Dark mode toggle body style */
+  .dark-theme {
+    background-color: #121212;
+    color: #f5f5f5;
+  }
+  
+  .dark-theme a {
+    color: #f5f5f5;
+  }
+  
+  .dark-theme .navbar {
+    background-color: #1f1f1f;
+  }

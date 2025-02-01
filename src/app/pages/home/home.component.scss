@@ -1,0 +1,38 @@
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+  
+    .home-card {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+  
+      h2 {
+        margin-bottom: 0.5rem;
+      }
+  
+      p {
+        margin-bottom: 1rem;
+        color: #666;
+      }
+  
+      .toggle-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+  
