@@ -1,12 +1,97 @@
 <div class="home-container">
-    <div class="home-card">
-      <h2>{{ showLogin ? 'Welcome Back!' : 'Create an Account' }}</h2>
-      <p>{{ showLogin ? 'Please login to continue.' : 'Sign up to get started.' }}</p>
-  
-      <button class="toggle-button" (click)="toggleForm()">
-        Switch to {{ showLogin ? 'Signup' : 'Login' }}
-      </button>
-  
+  <div class="home-card">
+    <h2>{{ showLogin ? 'Welcome Back!' : 'Create an Account' }}</h2>
+    <p>
+      {{ showLogin ? 'Please login to continue.' : 'Sign up to get started.' }}
+    </p>
+
+    <!-- Login Form -->
+    <form
+      *ngIf="showLogin"
+      class="auth-form"
+      (ngSubmit)="onLogin()"
+      #loginForm="ngForm"
+    >
+      <div class="form-group">
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="loginEmail"
+          name="loginEmail"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="loginPassword"
+          name="loginPassword"
+          required
+        />
+      </div>
+      <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+    </form>
+
+    <!-- Signup Form -->
+    <form
+      *ngIf="!showLogin"
+      class="auth-form"
+      (ngSubmit)="onSignup()"
+      #signupForm="ngForm"
+    >
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="Full Name"
+          [(ngModel)]="signupFullName"
+          name="signupFullName"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="signupEmail"
+          name="signupEmail"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="signupPassword"
+          name="signupPassword"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          [(ngModel)]="signupConfirmPassword"
+          name="signupConfirmPassword"
+          required
+        />
+      </div>
+      <button type="submit" [disabled]="!signupForm.form.valid">Sign Up</button>
+    </form>
+
+    <!-- Social Login Section (shown only on login view) -->
+    <div *ngIf="showLogin" class="social-login">
+      <p>Or login with:</p>
+      <div class="social-buttons">
+        <button type="button" class="social-btn apple">Apple</button>
+        <button type="button" class="social-btn gmail">Gmail</button>
+        <button type="button" class="social-btn facebook">Facebook</button>
+      </div>
     </div>
+
+    <!-- Toggle Button -->
+    <button class="toggle-button" (click)="toggleForm()">
+      Switch to {{ showLogin ? 'Signup' : 'Login' }}
+    </button>
   </div>
-  
+</div>
