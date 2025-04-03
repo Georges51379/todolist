@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DataService, Contact } from '../../services/data.service';
+
 
 @Component({
   selector: 'app-contact',
@@ -10,18 +12,28 @@ import { RouterModule } from '@angular/router';
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent {
+export class ContactComponent  implements OnInit {
 
-  name: string = '';
-  email: string = '';
-  message: string = '';
+  contact?: Contact;
 
-  onSubmit(): void {
-    // Replace this with your form handling logic
-    console.log('Contact Form Submitted:', this.name, this.email, this.message);
-    // Clear form fields or show a success message
-    this.name = '';
-    this.email = '';
-    this.message = '';
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    this.loadContact();
   }
+
+  loadContact(): void {
+     this.dataService.getContact().subscribe({
+          next: (data: Contact[]) => {
+            // Filter for active about records; assume only one active record is used
+            const activeContact = data.filter(b => b.status === 'Active');
+            if (activeContact.length > 0) {
+              this.contact = activeContact[0];
+            }
+          },
+          error: err => console.error('Error loading contact data', err)
+        });
+  }
+
+
 }

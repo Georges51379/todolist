@@ -1,16 +1,11 @@
 <div class="about-container">
-    <h1>About Us</h1>
-    <p>
-      Welcome to My To-Do App! We are a modern productivity company dedicated to simplifying your daily tasks.
-      Our mission is to empower you with intuitive tools and smart technology to better manage your time.
-    </p>
-    <div class="about-details">
-      <div class="team-member">
-        <img src="assets/icons/avatar.jpg" alt="Grg">
-        <h3>Georges Boutros</h3>
-        <p>CEO & Founder</p>
-      </div>
-      <!-- Add more team members -->
+  <h1>{{ about?.title }}</h1>
+  <p>{{ about?.description }}</p>
+  <div class="about-details">
+    <div class="team-member">
+      <img [src]="'/assets/img/' + about?.image_loc" [alt]="'' + about?.image_loc">
+      <h3>{{ about?.name }}</h3>
+      <p>{{ about?.role }}</p>
     </div>
   </div>
-  
+</div>

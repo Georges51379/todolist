@@ -6,6 +6,8 @@
       <li routerLinkActive="active"><a routerLink="/home" (click)="closeMenu()">Home</a></li>
       <li routerLinkActive="active"><a routerLink="/todo" (click)="closeMenu()">To-Do</a></li>
       <li routerLinkActive="active"><a routerLink="/note" (click)="closeMenu()">Note</a></li>
+      <li routerLinkActive="active"><a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a></li>
+      <button class="logout-btn" (click)="logout()">Logout</button>
       <li>
         <label class="switch">
           <!-- Ensure [checked]="isDarkMode" so the switch reflects the current state -->

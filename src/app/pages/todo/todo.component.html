@@ -1,11 +1,11 @@
 <div class="todo-page">
   <h2>My To-Do List</h2>
   
-  <!-- Form to add a new todo -->
-  <form class="todo-form" (ngSubmit)="addTodo()" #todoForm="ngForm">
+  <!-- Form for adding or editing a todo -->
+  <form class="todo-form" (ngSubmit)="addOrUpdateTodo()" #todoForm="ngForm">
     <input 
       type="text" 
-      placeholder="Enter new todo" 
+      placeholder="Enter todo" 
       [(ngModel)]="newTodoTitle" 
       name="title" 
       required 
@@ -17,32 +17,33 @@
       name="deadline" 
       required 
     />
-    <button type="submit" [disabled]="!todoForm.form.valid">Add Todo</button>
+    <button type="submit" [disabled]="!todoForm.form.valid">
+      {{ editingTodo ? 'Update Todo' : 'Add Todo' }}
+    </button>
+    <button type="button" (click)="resetForm()">Reset</button>
   </form>
   
   <!-- Draggable list of todos -->
   <div cdkDropList class="todo-list" (cdkDropListDropped)="drop($event)">
     <div 
-      *ngFor="let todo of todos; let i = index" 
+      *ngFor="let todo of todos" 
       cdkDrag 
       class="todo-item" 
-      [class.completed]="todo.completed"
+      [class.completed]="todo.done === 'Y'"
     >
-      <!-- Drag Handle -->
       <div class="drag-handle" cdkDragHandle>☰</div>
-      
-      <!-- Checkbox to mark as done -->
       <input 
         type="checkbox" 
-        [checked]="todo.completed" 
+        [checked]="todo.done === 'Y'" 
         (change)="toggleCompleted(todo)" 
       />
-      
-      <!-- Todo content: title and deadline -->
       <div class="todo-content">
-        <span class="todo-title">{{ todo.title }}</span>
-        <span class="todo-deadline">{{ todo.deadline | date:'mediumDate' }}</span>
+        <span class="todo-title">{{ todo.todo }}</span>
+        <span class="todo-deadline">{{ todo.duedate | date:'mediumDate' }}</span>
       </div>
+      <!-- Edit and Delete buttons -->
+      <button type="button" (click)="editTodo(todo)">Edit</button>
+      <button type="button" (click)="deleteTodo(todo.token)">Delete</button>
     </div>
   </div>
 </div>

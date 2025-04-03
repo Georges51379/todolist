@@ -7,12 +7,13 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { PolicyComponent } from './pages/policy/policy.component';
-
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'todo', component: TodoComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'note', component: NoteComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },

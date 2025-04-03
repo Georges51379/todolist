@@ -1,8 +1,8 @@
 <div class="note-page">
   <h2>My Notes</h2>
   
-  <!-- Form to add a new note -->
-  <form class="note-form" (ngSubmit)="addNote()" #noteForm="ngForm">
+  <!-- Form to add or edit a note -->
+  <form class="note-form" (ngSubmit)="addOrUpdateNote()" #noteForm="ngForm">
     <input 
       type="text" 
       placeholder="Note Title" 
@@ -23,7 +23,10 @@
       name="noteDeadline" 
       required
     />
-    <button type="submit" [disabled]="!noteForm.form.valid">Add Note</button>
+    <button type="submit" [disabled]="!noteForm.form.valid">
+      {{ editingNote ? 'Update Note' : 'Add Note' }}
+    </button>
+    <button type="button" (click)="resetForm()">Reset</button>
   </form>
   
   <!-- Draggable list of notes -->
@@ -32,7 +35,7 @@
       *ngFor="let note of notes" 
       cdkDrag 
       class="note-card" 
-      [class.completed]="note.completed"
+      [class.completed]="note.done === 'Y'"
     >
       <!-- Drag Handle -->
       <div class="drag-handle" cdkDragHandle>☰</div>
@@ -40,7 +43,7 @@
       <!-- Checkbox to mark as done -->
       <input 
         type="checkbox" 
-        [checked]="note.completed" 
+        [checked]="note.done === 'Y'" 
         (change)="toggleCompleted(note)" 
       />
       
@@ -49,9 +52,13 @@
         <h3 class="note-title">{{ note.title }}</h3>
         <p class="note-text">{{ note.content }}</p>
         <div class="note-deadline">
-          Deadline: {{ note.deadline | date:'mediumDate' }}
+          Deadline: {{ note.duedate | date:'mediumDate' }}
         </div>
       </div>
+      
+      <!-- Action Buttons -->
+      <button type="button" (click)="editNote(note)">Edit</button>
+      <button type="button" (click)="deleteNote(note.token)">Delete</button>
     </div>
   </div>
 </div>
